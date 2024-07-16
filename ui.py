@@ -85,6 +85,20 @@ class AccountDialog(QDialog):
             "password": self.password_edit.text(),
         }
 
+    def edit_account(self, index):
+        if index.column() == 0:  # 假设点击第一列触发编辑
+            row = index.row()
+            account_name = self.account_model.item(row, 0).text()
+            for account in self.controller.get_accounts():
+                if account.name == account_name:
+                    # 显示编辑对话框，并回显当前账户信息
+                    edit_dialog = AccountDialog(self.controller, account)
+                    if edit_dialog.exec_():
+                        account_data = edit_dialog.get_account_data()
+                        self.controller.edit_account(account_data, account_name)
+                        self.load_accounts()  # 重新加载账户数据
+                        break
+
 
 class BillDialog(QDialog):
     def __init__(self, controller, bill=None, parent=None):
