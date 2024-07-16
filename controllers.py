@@ -19,3 +19,7 @@ class Controller:
 
     def remove_bill(self, bill_id):
         self.app.remove_bill(bill_id)
+
+    def get_accounts(self):
+        # 使用 App 类的 accounts 属性获取账户列表
+        return self.app.accounts
